@@ -1,4 +1,13 @@
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--min-length',
+                    default=0,
+                    help='Sentences with size n or less will be ignored.',
+                    metavar='n',
+                    type=int)
+args = parser.parse_args()
 
 interim_prefix_path = '../../data/interim/'
 processed_prefix_path = '../../data/processed/'
@@ -13,8 +22,9 @@ for f in filenames:
                 open(processed_prefix_path + tsv_file, 'w+') as out:
             for sentence in text:
                 tokens_tags = sentence.split()
-                for token_tag in tokens_tags:
-                    token, tag = token_tag.split('_')
-                    out_str = token + '\t' + tag + '\n'
-                    out.write(out_str)
-                out.write('\n')
+                if len(tokens_tags) > args.min_length:
+                    for token_tag in tokens_tags:
+                        token, tag = token_tag.split('_')
+                        out_str = token + '\t' + tag + '\n'
+                        out.write(out_str)
+                    out.write('\n')
