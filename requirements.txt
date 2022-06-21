@@ -1,4 +1,4 @@
 jupyter==1.0.0
-numpy==1.14.5
+numpy==1.22.4
 torch==0.4.0
 torchtext==0.2.3
